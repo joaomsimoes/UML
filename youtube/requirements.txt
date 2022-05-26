@@ -1,0 +1,6 @@
+sqlalchemy
+pymysql
+pandas
+requests
+YouTubeTranscriptApi
+boto3

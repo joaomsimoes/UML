@@ -7,3 +7,10 @@ services:
       dockerfile: Dockerfile
 
     restart: on-failure
+
+  youtube:
+    build:
+      context: ./youtube
+      dockerfile: Dockerfile
+
+    restart: on-failure

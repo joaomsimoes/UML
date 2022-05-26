@@ -10,7 +10,7 @@ END;
 
 ##########################
 
-CREATE PROCEDURE save_info_tweets(
+CREATE PROCEDURE save_new_video_id(
     IN s_tweet_id INT,
     IN s_text TEXT,
     IN s_time DATETIME

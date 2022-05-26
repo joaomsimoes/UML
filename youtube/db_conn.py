@@ -21,4 +21,5 @@ def query(prod=None, values=None):
         return results
 
     except Exception as e:
-        logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        now = datetime.now()
+        logging.error(now.strftime('%H:%M:%S') + " ; " + str(e) + "\n")
