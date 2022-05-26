@@ -2,5 +2,5 @@ sqlalchemy
 pymysql
 pandas
 requests
-YouTubeTranscriptApi
+youtube_transcript_api
 boto3
