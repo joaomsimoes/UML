@@ -48,7 +48,7 @@ def youtube_check_new_video(channel_id=None):
             else:
                 if video_id not in links_db:
                     new_videos.append(video_id)
-                    query('save_new_video_id', [datetime.now(), channel_id, video_id])
+                    query('save_new_video_id', [video['snippet']['publishedAt'], channel_id, video_id])
 
         return new_videos
 
