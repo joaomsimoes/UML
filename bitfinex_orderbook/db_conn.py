@@ -22,4 +22,4 @@ def query(prod=None, values=None):
 
     except Exception as e:
         now = datetime.now()
-        logging.error(now.strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        logging.exception(now.strftime('%H:%M:%S') + " ; " + str(e) + "\n")

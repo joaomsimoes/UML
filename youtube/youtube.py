@@ -9,6 +9,8 @@ import time
 import boto3
 
 
+logging.basicConfig(level=logging.DEBUG)
+
 session = boto3.Session(
     aws_access_key_id='AKIASXCUIXAKONE3HCGW',
     aws_secret_access_key='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'
@@ -16,7 +18,7 @@ session = boto3.Session(
 
 s3 = session.resource('s3')
 
-logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "Connected to S3" + "\n")
+logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + "Connected to S3" + "\n")
 
 
 def youtube_check_new_video(channel_id=None):
@@ -53,7 +55,7 @@ def youtube_check_new_video(channel_id=None):
         return new_videos
 
     except Exception as e:
-        logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
 
 
 def youtube_subs(url):
@@ -67,12 +69,12 @@ def youtube_subs(url):
         res = result.get('ResponseMetadata')
 
         if res.get('HTTPStatusCode') == 200:
-            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + 'File Uploaded Successfully' + "\n")
+            logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + 'File Uploaded Successfully' + "\n")
         else:
-            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + f'File Not Uploaded - {url}' + "\n")
+            logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + f'File Not Uploaded - {url}' + "\n")
 
     except Exception as e:
-        logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
 
 
 if __name__ == '__main__':

@@ -3,6 +3,8 @@ import logging
 from datetime import datetime
 from sqlalchemy import create_engine
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 def conn_database():
     return create_engine(DB)
@@ -22,4 +24,4 @@ def query(prod=None, values=None):
 
     except Exception as e:
         now = datetime.now()
-        logging.error(now.strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        logging.exception(now.strftime('%H:%M:%S') + " ; " + str(e) + "\n")
