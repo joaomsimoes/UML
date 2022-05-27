@@ -18,7 +18,7 @@ session = boto3.Session(
 
 s3 = session.resource('s3')
 
-logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + "Connected to S3" + "\n")
+logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "Connected to S3" + "\n")
 
 
 def youtube_check_new_video(channel_id=None):
@@ -69,9 +69,9 @@ def youtube_subs(url):
         res = result.get('ResponseMetadata')
 
         if res.get('HTTPStatusCode') == 200:
-            logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + 'File Uploaded Successfully' + "\n")
+            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + 'File Uploaded Successfully' + "\n")
         else:
-            logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + f'File Not Uploaded - {url}' + "\n")
+            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + f'File Not Uploaded - {url}' + "\n")
 
     except Exception as e:
         logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")

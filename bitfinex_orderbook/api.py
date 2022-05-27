@@ -18,7 +18,7 @@ if __name__ == '__main__':
             df['time'] = datetime.now()
             df.to_sql('order_book', conn_database(), if_exists='append', index=False)
 
-            logging.info(datetime.now().strftime('%H:%M:%S') + " ; " + "new files saved" + "\n")
+            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "new files saved" + "\n")
 
             time.sleep(3600)
 
