@@ -1,2 +1,3 @@
 utils/keys.py
 data.txt
+binance_trades/*.csv
