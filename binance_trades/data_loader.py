@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 datetime.today().strftime('%Y-%m')
 
-START = "2021-01-01"
+START = "2022-01-01"
 END = "2022-04-01"
 COIN = 'BTCUSDT'
 
