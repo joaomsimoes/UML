@@ -1,4 +1,4 @@
-from keys import *
+from utils.keys import *
 import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
