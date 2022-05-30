@@ -4,12 +4,11 @@ import os
 import zipfile
 from datetime import datetime, timedelta
 
-datetime.today().strftime('%Y-%m-%d')
+datetime.today().strftime('%Y-%m')
 
-START = "2022-05-22"
-END = (datetime.today() - timedelta(days=2)).strftime('%Y-%m-%d')
+START = "2021-01-01"
+END = "2022-04-01"
 COIN = 'BTCUSDT'
-TIME = '1h'
 
 date_list = pd.date_range(start=START, end=END)
 url = []
@@ -17,41 +16,48 @@ path = './temp/'
 
 
 def download_files(type=None):
+    print(f'Starting downloading {type}...')
     if type == 'futures':
         for date in date_list:
-            file = f"https://data.binance.vision/data/futures/um/daily/aggTrades/BTCUSDT/BTCUSDT-aggTrades-{date.strftime('%Y-%m-%d')}.zip"
-            print(file)
+            file = f"https://data.binance.vision/data/futures/um/monthly/aggTrades/BTCUSDT/BTCUSDT-aggTrades-{date.strftime('%Y-%m')}.zip"
             url.append(file)
     else:
         for date in date_list:
-            file = f"https://data.binance.vision/data/{type}/daily/aggTrades/{COIN}/{COIN}-aggTrades-{date.strftime('%Y-%m-%d')}.zip"
+            file = f"https://data.binance.vision/data/{type}/monthly/aggTrades/{COIN}/{COIN}-aggTrades-{date.strftime('%Y-%m')}.zip"
             url.append(file)
 
     dload.save_multi(url_list=url, dir=path)
 
 
 def create_dataframe(type=None):
+    print(f'Unziping {type}')
     columns = ['id', 'price', 'quantity', 'firstTrade', 'lastTrade', 'timestamp', 'buyer']
 
-    df = pd.DataFrame(columns=columns)
-
+    trades = pd.DataFrame(columns=columns)
     for file in os.listdir(path):
-        if file.endswith('.zip'):
-            with zipfile.ZipFile(path + file, 'r') as zip_ref:
-                zip_ref.extractall(path)
-            os.remove(path + file)
+        try:
+            if file.endswith('.zip'):
+                with zipfile.ZipFile(path + file, 'r') as zip_ref:
+                    zip_ref.extractall(path)
+                os.remove(path + file)
+        except:
+            print(f'{file} error')
 
+    print(f'Starting csv...')
     for file in os.listdir(path):
         if file.endswith('.csv'):
-            csv = pd.read_csv(path + file, header=None, names=columns, index_col=False)
-            df = pd.concat([df, csv], ignore_index=True, names=columns)
+            trades = pd.read_csv(path + file, header=None, names=columns, index_col=False)
+            trades['timestamp'] = pd.to_datetime(trades.timestamp, unit='ms')
+            trades.to_csv(f'aggtrades-{type}.csv', mode='a', index=False, header=False)
             os.remove(path + file)
-
-    df['timestamp'] = pd.to_datetime(df.timestamp, unit='ms')
-    df.to_csv(f'aggtrades-{type}.csv')
 
 
 if __name__ == '__main__':
+    columns = ['id', 'price', 'quantity', 'firstTrade', 'lastTrade', 'timestamp', 'buyer']
+    df = pd.DataFrame(columns=columns)
+    df.to_csv(f'aggtrades-futures.csv')
+    df.to_csv(f'aggtrades-spot.csv')
+
     download_files('futures')
     create_dataframe('futures')
 

@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from db_conn import conn_database
+from utils.db_conn import conn_database
 from datetime import datetime
 import logging
 import time

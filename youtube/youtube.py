@@ -1,4 +1,4 @@
-from keys import YOUTUBE
+from keys import *
 import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
@@ -12,8 +12,8 @@ import boto3
 logging.basicConfig(level=logging.DEBUG)
 
 session = boto3.Session(
-    aws_access_key_id='AKIASXCUIXAKONE3HCGW',
-    aws_secret_access_key='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'
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
 )
 
 s3 = session.resource('s3')
