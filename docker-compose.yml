@@ -3,12 +3,12 @@ services:
 
   api:
     build:
-      context: ./bitfinex_orderbook
+      context: orderbook
       dockerfile: Dockerfile
     restart: on-failure
 
   youtube:
     build:
-      context: ./youtube
+      context: nlp
       dockerfile: Dockerfile
     restart: on-failure
