@@ -3,7 +3,7 @@ import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
 from datetime import datetime
-from db_conn import query
+from utils.db_conn import query
 import logging
 import time
 import boto3
