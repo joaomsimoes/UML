@@ -8,20 +8,25 @@ import time
 logging.basicConfig(level=logging.DEBUG)
 
 
+def api(type=None):
+    try:
+        r = f'https://api-pub.bitfinex.com/v2/book/tBTCUSD/{type}'
+
+        response = requests.get(r, params={'len': 100})
+        df = pd.DataFrame(response.json(), columns=['price', 'count', 'amount'])
+        df['time'] = datetime.now()
+        df['type'] = type
+        df.to_sql('orderBook', conn_database(), if_exists='append', index=False)
+
+        logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "new files saved" + "\n")
+
+    except Exception as e:
+        logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+
+
 if __name__ == '__main__':
-
     while True:
-        try:
-            r = 'https://api-pub.bitfinex.com/v2/book/tBTCUSD/P2'
+        for value in ['P0', 'P1', 'P2', 'P3', 'P4']:
+            api(value)
 
-            response = requests.get(r, params={'len': 100})
-            df = pd.DataFrame(response.json(), columns=['price', 'count', 'amount'])
-            df['time'] = datetime.now()
-            df.to_sql('order_book', conn_database(), if_exists='append', index=False)
-
-            logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "new files saved" + "\n")
-
-            time.sleep(3600)
-
-        except Exception as e:
-            logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        time.sleep(3600)
