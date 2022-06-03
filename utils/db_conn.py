@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 from sqlalchemy import create_engine
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 def conn_database():

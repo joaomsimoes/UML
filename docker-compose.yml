@@ -5,6 +5,7 @@ services:
     build:
       context: orderbook
       dockerfile: Dockerfile
+    ports:
     restart: on-failure
 
   youtube:
