@@ -21,7 +21,7 @@ def api(type=None):
         logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "new files saved" + "\n")
 
     except Exception as e:
-        logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+        logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ def youtube_check_new_video(channel_id=None):
         to_filter = ['UUngIhBkikUe6e7tZTjpKK7Q', 'UUviqt5aaucA1jP3qFmorZLQ',
                      'UUgY66N1YS_G9lYMvCQko6yw', 'UUz28r8vkhJD9WhP5wmjefSw']
 
-        links_db = query('query_video_id', [])
+        links_db = query('query_video_ids', ['2012-05-25', '2032-06-03'])
         links_db = [i[0] for i in links_db]
 
         url = f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={channel_id}&maxResults=15&" \

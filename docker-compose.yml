@@ -5,11 +5,4 @@ services:
     build:
       context: orderbook
       dockerfile: Dockerfile
-    ports:
-    restart: on-failure
-
-  youtube:
-    build:
-      context: nlp
-      dockerfile: Dockerfile
     restart: on-failure
