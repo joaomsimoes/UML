@@ -26,7 +26,8 @@ def api(type=None):
 
 if __name__ == '__main__':
     while True:
-        for value in ['P0', 'P1', 'P2', 'P3', 'P4']:
-            api(value)
-
-        time.sleep(3600)
+        now = datetime.now()
+        if (now.minute == 0) and (now.second == 0):
+            for value in ['P0', 'P1', 'P2', 'P3', 'P4']:
+                print(value)
+                time.sleep(1)

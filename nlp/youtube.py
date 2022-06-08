@@ -22,40 +22,40 @@ logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + "Connected to S3" + 
 
 
 def youtube_check_new_video(channel_id=None):
-    try:
-        to_filter = ['UUngIhBkikUe6e7tZTjpKK7Q', 'UUviqt5aaucA1jP3qFmorZLQ',
-                     'UUgY66N1YS_G9lYMvCQko6yw', 'UUz28r8vkhJD9WhP5wmjefSw']
+    # try:
+    to_filter = ['UUngIhBkikUe6e7tZTjpKK7Q', 'UUviqt5aaucA1jP3qFmorZLQ',
+                 'UUgY66N1YS_G9lYMvCQko6yw', 'UUz28r8vkhJD9WhP5wmjefSw']
 
-        links_db = query('query_video_ids', ['2012-05-25', '2032-06-03'])
-        links_db = [i[0] for i in links_db]
+    links_db = query('query_video_ids', ['2012-05-25', '2032-06-03'])
+    links_db = [i[0] for i in links_db]
 
-        url = f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={channel_id}&maxResults=15&" \
-              f"key={YOUTUBE}"
+    url = f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={channel_id}&maxResults=15&" \
+          f"key={YOUTUBE}"
 
-        response = requests.request("GET", url)
-        data = response.json()['items']
-        logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + str(response) + "\n")
+    response = requests.request("GET", url)
+    data = response.json()['items']
+    logging.debug(datetime.now().strftime('%H:%M:%S') + " ; " + str(response) + "\n")
 
-        new_videos = []
+    new_videos = []
 
-        for video in data:
-            video_id = video['snippet']['resourceId']['videoId']
-            video_title = str(video['snippet']['title'])
-            if channel_id in to_filter:
-                if 'bitcoin' in video_title.lower():
-                    if video_id not in links_db:
-                        new_videos.append(video_id)
-                        query('save_new_video_id', [video['snippet']['publishedAt'], channel_id, video_id])
-
-            else:
+    for video in data:
+        video_id = video['snippet']['resourceId']['videoId']
+        video_title = str(video['snippet']['title'])
+        if channel_id in to_filter:
+            if 'bitcoin' in video_title.lower():
                 if video_id not in links_db:
                     new_videos.append(video_id)
                     query('save_new_video_id', [video['snippet']['publishedAt'], channel_id, video_id])
 
-        return new_videos
+        else:
+            if video_id not in links_db:
+                new_videos.append(video_id)
+                query('save_new_video_id', [video['snippet']['publishedAt'], channel_id, video_id])
 
-    except Exception as e:
-        logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
+    return new_videos
+
+    # except Exception as e:
+    #     logging.exception(datetime.now().strftime('%H:%M:%S') + " ; " + str(e) + "\n")
 
 
 def youtube_subs(url):
